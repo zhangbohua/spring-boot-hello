@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+        <html xmlns:th="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta charset="UTF-8">
+            <title>客户列表展示</title>
+            <link rel="stylesheet" th:href="@{/css/pagination.css}">
+            <script th:src="@{/js/jquery.pagination.js}"></script>
+        </head>
+<body>
+<h3 align="center">客户列表展示</h3>
+<table border="1" style="width: 500px;" align="center">
+    <tr>
+        <td>编号</td>
+        <td>姓名</td>
+        <td>性别</td>
+        <td>手机</td>
+        <td>住址</td>
+        <td>操作</td>
+    </tr>
+    <tr th:each="cust:${list}">
+        <td th:text="${cust.id}"></td>
+        <td th:text="${cust.name}"></td>
+        <td th:text="${cust.gender}"></td>
+        <td th:text="${cust.telephone}"></td>
+        <td th:text="${cust.address}"></td>
+        <td>
+            <a th:href="@{/customer/findById(id=${cust.id})}">修改</a>&nbsp;
+            <a th:href="@{/customer/delete(id=${cust.id})}">删除</a>
+        </td>
+    </tr>
+</table>
+<div align="center" style="margin-top:2%;">
+    总共<span th:text="${pageInfo.pages}"/>页|
+    第<span th:text="${pageInfo.pageNum}"/>页|
+    <a th:href="@{/customer/pageListByPageInfo(pageNum=${pageInfo.firstPage})}">首页</a>|
+
+    <span th:if="${pageInfo.getPageNum()}=='1'">
+        <a th:href="@{/customer/pageListByPageInfo(pageNum=1)}">上一页</a>|
+    </span>
+    <span th:if="${pageInfo.pageNum}!='1'">
+        <a th:href="@{/customer/pageListByPageInfo(pageNum=${pageInfo.prePage})}">上一页</a>|
+    </span>
+
+    <span th:if="${pageInfo.getPageNum()}==${pageInfo.pages}">
+        <a th:href="@{/customer/pageListByPageInfo(pageNum=${pageInfo.pages})}">下一页</a>|
+    </span>
+    <span th:if="${pageInfo.getPageNum()}!=${pageInfo.pages}">
+        <a th:href="@{/customer/pageListByPageInfo(pageNum=${pageInfo.nextPage})}">下一页</a>|
+    </span>
+
+    <a th:href="@{/customer/pageListByPageInfo(pageNum=${pageInfo.lastPage})}">尾页</a>
+</div>
+
+
+<!--<button th:hidden="${currentpage}==1"><a th:href="@{/customer/pageQueryList(currentpage=${currentpage}-1,pagesize=${pagesize})}">上一页</a></button>
+<button th:hidden="${currentpage}*${pagesize}>=${count}"><a th:href="@{/customer/pageQueryList(currentpage=${currentpage}+1,pagesize=${pagesize})}">下一页</a></button>-->
+
+</body>
+</html>

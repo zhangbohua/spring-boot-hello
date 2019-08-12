@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 该文件存放CRUD的sql语句 -->
+<mapper namespace="com.glodon.springboothello.dao.CustomerMapper">
+
+    <insert id="save" parameterType="com.glodon.springboothello.domain.Customer">
+  INSERT INTO t_customer
+   (
+   NAME,
+   gender,
+   telephone,
+   address
+   )
+   VALUES
+   (
+   #{name},
+   #{gender},
+   #{telephone},
+   #{address}
+   )
+ </insert>
+
+    <select id="findAll" resultType="com.glodon.springboothello.domain.Customer">
+  SELECT  id,
+   name,
+   gender,
+   telephone,
+   address
+   FROM
+   t_customer
+  </select>
+ <select id="pageFind" resultType="com.glodon.springboothello.domain.Customer">
+  SELECT  id,
+   name,
+   gender,
+   telephone,
+   address
+   FROM
+   t_customer
+   limit #{pageNum} ,#{pagesize}
+     </select>
+ <select id="count" resultType="java.lang.Integer">
+  select count(*) from t_customer
+ </select>
+
+    <select id="findById" resultType="com.glodon.springboothello.domain.Customer">
+  SELECT  id,
+   NAME,
+   gender,
+   telephone,
+   address
+   FROM
+   t_customer
+   where id = #{value}
+ </select>
+
+    <update id="update" parameterType="com.glodon.springboothello.domain.Customer">
+  UPDATE t_customer
+   SET
+   NAME = #{name} ,
+   gender = #{gender} ,
+   telephone = #{telephone} ,
+   address = #{address}
+   WHERE
+   id = #{id}
+ </update>
+
+    <delete id="delete" parameterType="int">
+  DELETE FROM t_customer
+   WHERE
+   id = #{value}
+ </delete>
+
+</mapper>
